@@ -1,0 +1,12 @@
+{
+    "require": {
+        "doctrine/orm": "^2.6",
+        "firebase/php-jwt": "^5"
+    },
+    "autoload": {
+        "psr-4": {
+            "entities\\": "entities/",
+            "": "lib/"
+        }
+    }
+}
