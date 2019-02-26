@@ -1,4 +1,4 @@
 uploads/*
 .idea/
 bootstrap.php
-lib/ldap.php
+lib/ldapconfig.php
