@@ -400,7 +400,6 @@ class Usuario implements Serializable {
 
     private static function getJWTKey() {
 	    return file_get_contents($GLOBALS['JWT_KEY']);
-        //return 'BATATA';
     }
 
     public function getJWT() {
@@ -422,8 +421,16 @@ class Usuario implements Serializable {
      * @return Usuario
      */
     public static function getFromJWT($jwt) {
-        $usr = \Firebase\JWT\JWT::decode($jwt,self::getJWTKey(),['HS256']);
-        return new Usuario($usr->username,true);
+    	if (!isset($jwt) || empty($jwt)) {
+    		return null;
+		}
+    	try {
+			$usr = \Firebase\JWT\JWT::decode($jwt, self::getJWTKey(), ['HS256']);
+			return new Usuario($usr->username, true);
+		} catch (Throwable $t) {
+    		echo $t->getTraceAsString();
+    		return null;
+		}
     }
 	
 }
