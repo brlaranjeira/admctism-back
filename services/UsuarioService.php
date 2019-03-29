@@ -18,13 +18,23 @@ class UsuarioService {
 		return $usuarios;
 	}
 
+	static function getByLogin($login) {
+		require __DIR__ . "/../bootstrap.php";
+		if ($login === null) {
+			return null;
+		}
+		$usuario = $entity_manager->getRepository('\entities\Usuario')
+			->findOneBy(array('login'=>$login));
+		return $usuario;
+	}
+
 	static function getById($id) {
 		require __DIR__ . "/../bootstrap.php";
 		if ($id === null) {
 			return null;
 		}
 		$grupo = $entity_manager->find('\entities\Usuario',$id);
-		return $grupo;
+		return $usuario;
 	}
 
 	public static function changeGrupo($userId, $grupo) {

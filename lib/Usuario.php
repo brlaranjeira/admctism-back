@@ -404,12 +404,15 @@ class Usuario implements Serializable {
 
     public function getJWT() {
 	    $this->loadGrupos();
+	    $gid = \services\UsuarioService::getByLogin($this->uid)->getGrupo()->getId();
+	    $grupo = \services\GrupoService::getById($gid);
         $arr = [
             "iss" => 'intranet.ctism.ufsm.br',
             "username"=>$this->uid,
             "idnumber" =>$this->uidNumber,
             "fullname"=> $this->fullName,
             "email" =>$this->email,
+			"grupo" => $grupo->asJSON(),
             "grupos"=> $this->grupos,
             "exp" => time() + 3600
         ];
