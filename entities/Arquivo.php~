@@ -158,8 +158,8 @@ class Arquivo
         ]);
     }
 
-    public static function create($location,$originalName,$persist=true) {
-        require __DIR__ . '/../bootstrap.php';
+    /*public static function create($location,$originalName,$persist=true) {
+        require_once __DIR__ . '/../bootstrap.php';
         $arq = new \entities\Arquivo();
         $arq->contentHash = hash_file('sha256',$location);
         $extension = strrchr($originalName,'.');
@@ -182,7 +182,7 @@ class Arquivo
             $entity_manager->flush();
         }
         return $arq;
-    }
+    }*/
 
 
 }

@@ -7,29 +7,17 @@
  */
 
 require __DIR__ . "/../../bootstrap.php";
-$user = Usuario::getFromJWT($_POST['jwt']);
 
-
-$compra = $entity_manager->find('\entities\Compra', $_POST['compra']);
-
-if ($user->getUid() == $compra->getUsuario()) {
+$user = \services\UsuarioService::getFromJWT($_POST['jwt']);
+$compraId = $_POST['compra'];
+$compra = \services\CompraService::getById($compraId);
+if ($user->getId() == $compra->getUsuario()->getId()) {
     try {
-        $entity_manager->remove($compra);
-        $entity_manager->flush();
-        echo json_encode([
-            'success' => true,
-            'message' => 'Compra excluída!'
-        ]);
+    	\services\CompraService::remove($compraId);
+        echo json_encode([ 'success' => true, 'message' => 'Compra excluída!' ]);
     } catch (Throwable $t) {
-        echo json_encode([
-            "success" => false,
-            "message" => 'Houve um erro na solicitação. Favor contatar o setor responsável',
-            "errormessage" => $t->getMessage()
-        ]);
+        echo json_encode([ "success" => false, "message" => 'Houve um erro na solicitação. Favor contatar o setor responsável', "errormessage" => $t->getMessage() ]);
     }
 } else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Você não tem permissão para excluir esta compra'
-    ]);
+    echo json_encode([ 'success' => false, 'message' => 'Você não tem permissão para excluir esta compra' ]);
 }

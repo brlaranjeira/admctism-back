@@ -50,21 +50,22 @@ class Compra {
      */
     private $modelo;
     /**
-     * @Column(type="string")
+     * @ManyToOne(targetEntity="Usuario", cascade={"persist"})
+	 * @JoinColumn(name="usuario", referencedColumnName="id",nullable=false)
      */
     private $usuario;
     /**
-     * @ManyToOne(targetEntity="EstadoCompra")
+     * @ManyToOne(targetEntity="EstadoCompra", cascade={"persist"})
      * @JoinColumn(name="estado",referencedColumnName="id",nullable=false)
      */
     private $estado;
     /**
-     * @ManyToOne(targetEntity="TipoDespesa")
+     * @ManyToOne(targetEntity="TipoDespesa", cascade={"persist"})
      * @JoinColumn(name="tipo_despesa",referencedColumnName="id",nullable=false)
      */
     private $tipoDespesa;
     /**
-     * @ManyToOne(targetEntity="TipoSolicitacao")
+     * @ManyToOne(targetEntity="TipoSolicitacao", cascade={"persist"})
      * @JoinColumn(name="tipo_solicitacao",referencedColumnName="id",nullable=false)
      */
     private $tipoSolicitacao;
@@ -364,8 +365,7 @@ class Compra {
 
 
     public function asJSON() {
-        $usr = new \Usuario($this->usuario,true);
-
+        //$usr = new \Usuario($this->usuario,true);
         return json_encode([
             "id" => $this->id,
             "despesaRecorrente" => $this->despesaRecorrente,
@@ -375,7 +375,7 @@ class Compra {
             "descricao" => $this->descricao,
             "quantidade" => $this->quantidade,
             "modelo" => $this->modelo,
-            "usuario" => $usr->asJSON(),
+            "usuario" => $this->usuario->asJSON(),
             "estado" => $this->estado->asJSON(),
             "tipoDespesa" => $this->tipoDespesa->asJSON(),
             "tipoSolicitacao" => $this->tipoSolicitacao->asJSON(),

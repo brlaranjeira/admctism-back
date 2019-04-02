@@ -9,7 +9,7 @@
 require __DIR__ . "/../../bootstrap.php";
 
 $user = Usuario::getFromJWT($_GET['jwt']);
-$compras = $entity_manager->getRepository('\entities\Compra')->findAll();
+$compras = \services\CompraService::getAll();
 $errors = [];
 foreach ($compras as $compra) {
 	$orcamentos = $compra->getOrcamentos();

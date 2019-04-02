@@ -6,7 +6,7 @@
  * Time: 15:43
  */
 
-require_once __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 $grupo = \services\GrupoService::getById($_POST['grupo']);
 $admin = strtolower($_POST['admin']) === 'true';

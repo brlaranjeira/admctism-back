@@ -35,4 +35,13 @@ class Utils {
         return "$updir$fname";
     }
 
+    public static $em = null;
+    public static function getEntityManager() {
+    	require  __DIR__ . '/../bootstrap.php';
+		if (!isset(self::$em)) {
+			self::$em = Doctrine\ORM\EntityManager::create($connection_parameters, $configuration);
+		}
+		return self::$em;
+	}
+
 }

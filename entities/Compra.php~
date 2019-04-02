@@ -50,7 +50,8 @@ class Compra {
      */
     private $modelo;
     /**
-     * @Column(type="string")
+     * @ManyToOne(targetEntity="Usuario")
+	 * @JoinColumn(name="usuario", referencedColumnName="id",nullable=false)
      */
     private $usuario;
     /**
@@ -364,8 +365,7 @@ class Compra {
 
 
     public function asJSON() {
-        $usr = new \Usuario($this->usuario,true);
-
+        //$usr = new \Usuario($this->usuario,true);
         return json_encode([
             "id" => $this->id,
             "despesaRecorrente" => $this->despesaRecorrente,
@@ -375,7 +375,7 @@ class Compra {
             "descricao" => $this->descricao,
             "quantidade" => $this->quantidade,
             "modelo" => $this->modelo,
-            "usuario" => $usr->asJSON(),
+            "usuario" => $this->usuario->asJSON(),
             "estado" => $this->estado->asJSON(),
             "tipoDespesa" => $this->tipoDespesa->asJSON(),
             "tipoSolicitacao" => $this->tipoSolicitacao->asJSON(),

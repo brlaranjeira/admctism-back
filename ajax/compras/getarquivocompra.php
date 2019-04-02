@@ -8,7 +8,7 @@
 
 require __DIR__ . "/../../bootstrap.php";
 
-$compra = $entity_manager->find('\entities\Compra', $_REQUEST['compra']);
+$compra = \services\CompraService::getById($_REQUEST['compra']);
 $arquivo = $compra->getArquivo();
 if ($arquivo == null) {
     die("Error: File not found.");

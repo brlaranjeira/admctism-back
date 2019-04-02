@@ -8,12 +8,17 @@
 
 require '../../bootstrap.php';
 
-$user = $_POST['usr'];
-$password = $_POST['pw'];;
-if (Usuario::auth($user,$password)) {
-    $jwt = (new Usuario($user,true))->getJWT();
-    $ret = ["success"=>true,"jwt"=>$jwt];
-} else {
-    $ret = ["success"=>false];
+$userName = $_REQUEST['usr'];
+$password = $_REQUEST['pw'];;
+
+try {
+	if (\services\UsuarioService::auth($userName,$password)) {
+		$user = \services\UsuarioService::getByLogin($userName);
+		$jwt = \services\UsuarioService::getJWT($user->getId());
+		echo json_encode(["success"=>true,"jwt"=>$jwt]);
+	} else {
+		echo json_encode(["success"=>false, "message"=>'Login e/ou senha inválidos']);
+	}
+} catch (Throwable $t) {
+	echo json_encode(['success'=>false,'message'=>'Houve um erro durante o processo','errorMessage'=>$t->getMessage()]);
 }
-echo json_encode($ret);

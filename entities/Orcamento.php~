@@ -20,9 +20,8 @@ class Orcamento {
      * @Column(type="bigint")
      */
     private $id;
-
     /**
-     * @OneToOne(targetEntity="Arquivo",cascade={"all"})
+     * @OneToOne(targetEntity="Arquivo",cascade={"persist", "remove"})
      * @JoinColumn(name="arquivo",referencedColumnName="id")
      * @var Arquivo
      */
@@ -39,16 +38,11 @@ class Orcamento {
      * @Column(name="dthr_modificacao",type="datetime")
      */
     private $dthrModificacao;
-
-
     /**
      * @ManyToOne(targetEntity="Compra", inversedBy="orcamentos", fetch="LAZY")
      * @JoinColumn(name="compra",referencedColumnName="id", nullable=false)
      */
     private $compra;
-
-
-
     /**
      * Get id.
      *
@@ -58,7 +52,6 @@ class Orcamento {
     {
         return $this->id;
     }
-
     /**
      * Set valor.
      *
@@ -72,7 +65,6 @@ class Orcamento {
 
         return $this;
     }
-
     /**
      * Get valor.
      *
@@ -82,7 +74,6 @@ class Orcamento {
     {
         return $this->valor;
     }
-
     /**
      * Set dthrCriacao.
      *
@@ -96,7 +87,6 @@ class Orcamento {
 
         return $this;
     }
-
     /**
      * Get dthrCriacao.
      *
@@ -105,7 +95,6 @@ class Orcamento {
     public function getDthrCriacao() {
         return $this->dthrCriacao;
     }
-
     /**
      * Set dthrModificacao.
      *
@@ -119,7 +108,6 @@ class Orcamento {
 
         return $this;
     }
-
     /**
      * Get dthrModificacao.
      *
@@ -129,7 +117,6 @@ class Orcamento {
     {
         return $this->dthrModificacao;
     }
-
     /**
      * Set arquivo.
      *
@@ -143,7 +130,6 @@ class Orcamento {
 
         return $this;
     }
-
     /**
      * Get arquivo.
      *

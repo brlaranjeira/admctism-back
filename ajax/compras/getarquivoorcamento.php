@@ -8,7 +8,7 @@
 
 require __DIR__ . "/../../bootstrap.php";
 
-$orcamento = $entity_manager->find('\entities\Orcamento', $_REQUEST['id']);
+$orcamento = \services\OrcamentoService::getById($_REQUEST['id']);
 $arquivo = $orcamento->getArquivo();
 if (!isset($arquivo)) {
 	die("Error: File not found");

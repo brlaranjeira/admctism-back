@@ -343,32 +343,11 @@ class Usuario implements Serializable {
 	
 	public static function auth($usr,$pw) {
 		//require_once (__DIR__ . '/../lib/LDAP/ldap.php');
-		$ldap = new ldap();
-		if ($ldap->auth($usr,$pw)) {
-			return new Usuario($usr);
-		}
-		return null;
-		
+		require __DIR__ . '/../bootstrap.php';
+		return true;
 	}
 	
-	public function saveToSession() {
-		(session_status() != PHP_SESSION_ACTIVE) and session_start();
-		$_SESSION['ctism_user'] = serialize($this);
-	}
 
-	public static function destroySession() {
-        session_start();
-        session_destroy();
-        session_commit();
-    }
-
-	public static function restoreFromSession() {
-		(session_status() != PHP_SESSION_ACTIVE) and session_start();
-		return isset($_SESSION['ctism_user'])
-			? (new Usuario(null))->unserialize($_SESSION['ctism_user'])
-			: null;
-	}
-	
 	public function getPaginasPermitidas() {
 		$usrGroups = $this->getGrupos();
 		$paginas = ConfigClass::paginas;

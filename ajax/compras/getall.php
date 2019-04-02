@@ -7,12 +7,12 @@
  */
 
 require __DIR__ . "/../../bootstrap.php";
-$user = Usuario::getFromJWT($_GET['jwt']);
-
-if (!$user->hasGroup(['10001','10002','10004'])) {
-    echo json_encode(["success"=>"false"]);
+$user = \services\UsuarioService::getFromJWT($_GET['jwt']);
+if (true) {
+	$compras = \services\CompraService::getAll();
+	$data = '[' . implode(',', array_map(function ($t) { return $t->asJSON(); }, $compras)) . ']';
+	echo json_encode(["success"=>true,"compras"=>$data,"jwt"=> \services\UsuarioService::getJWT($user->getId())]);
 } else {
-    $compras = $entity_manager->getRepository('entities\Compra')->findAll();
-    $data = '[' . implode(',', array_map(function ($t) { return $t->asJSON(); }, $compras)) . ']';
-    echo json_encode(["success"=>true,"compras"=>$data,"jwt"=>$user->getJWT()]);
+	echo json_encode(["success"=>"false"]);
+
 }

@@ -6,11 +6,15 @@
  * Time: 14:53
  */
 
-require_once __DIR__ . '/../../bootstrap.php';
-$user = \Usuario::getFromJWT($_REQUEST['jwt']);
-$grupo = \services\GrupoService::getById($_REQUEST['grupo']);
-$usuarios = \services\GrupoService::getGroupUsers($grupo);
-$usuariosJson = array_map(function ($u) {
-	return $u->asJSON();
-}, $usuarios);
-echo json_encode(array("usuarios"=>$usuariosJson,"jwt"=>$user->getJWT()));
+require __DIR__ . '/../../bootstrap.php';
+$user = \services\UsuarioService::getFromJWT($_REQUEST['jwt']);
+try {
+	$grupo = \services\GrupoService::getById($_REQUEST['grupo']);
+	$usuarios = \services\GrupoService::getGroupUsers($grupo);
+	$usuariosJson = array_map(function ($u) {
+		return $u->asJSON();
+	}, $usuarios);
+	echo json_encode(array("usuarios" => $usuariosJson, "jwt" => \services\UsuarioService::getJWT($user->getId())));
+} catch (Throwable $t) {
+	echo json_encode([ "success" => false, "message" => 'Houve um erro na solicitação. Favor contatar o setor responsável', "errormessage" => $t->getMessage() ]);
+}

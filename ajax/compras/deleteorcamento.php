@@ -7,27 +7,17 @@
  */
 
 require __DIR__ . "/../../bootstrap.php";
-$user = Usuario::getFromJWT($_POST['jwt']);
+$user = \services\UsuarioService::getFromJWT($_POST['jwt']);
 
-$orcamento = $entity_manager->find('\entities\Orcamento', $_POST['orcamento']);
-if ($orcamento->getCompra()->getUsuario() == $user->getUid()) {
-    try {
-        $entity_manager->remove($orcamento);
-        $entity_manager->flush();
-        echo json_encode([
-            'success' => true,
-            'message' => 'Orcamento excluído!'
-        ]);
-    } catch ( Throwable $t ) {
-        echo json_encode([
-            "success" => false,
-            "message" => 'Houve um erro na solicitação. Favor contatar o setor responsável',
-            "errormessage" => $t->getMessage()
-        ]);
-    }
+$orcamentoId = $_REQUEST['orcamento'];
+$orcamento = \services\OrcamentoService::getById($orcamentoId);
+if ($orcamento->getCompra()->getUsuario()->getId() == $user->getId()) {
+	try {
+		\services\OrcamentoService::removeOrcamento($orcamentoId);
+		echo json_encode(['success' => true, 'message' => 'Orcamento excluído!']);
+	} catch (Throwable $t) {
+		echo json_encode(["success" => false, "message" => 'Houve um erro na solicitação. Favor contatar o setor responsável', "errormessage" => $t->getMessage()]);
+	}
 } else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Você não tem permissão para excluir este orcamento'
-    ]);
+	echo json_encode(['success' => false, 'message' => 'Você não tem permissão para excluir este orcamento']);
 }

@@ -168,4 +168,165 @@ class Usuario
     {
         return $this->grupo;
     }
+
+    /**
+     * Set login.
+     *
+     * @param string $login
+     *
+     * @return Usuario
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    /**
+     * Get login.
+     *
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set uidnumber.
+     *
+     * @param string $uidnumber
+     *
+     * @return Usuario
+     */
+    public function setUidnumber($uidnumber)
+    {
+        $this->uidnumber = $uidnumber;
+
+        return $this;
+    }
+
+    /**
+     * Get uidnumber.
+     *
+     * @return string
+     */
+    public function getUidnumber()
+    {
+        return $this->uidnumber;
+    }
+
+    /**
+     * Set nome.
+     *
+     * @param string $nome
+     *
+     * @return Usuario
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome.
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * Set matricula.
+     *
+     * @param string $matricula
+     *
+     * @return Usuario
+     */
+    public function setMatricula($matricula)
+    {
+        $this->matricula = $matricula;
+
+        return $this;
+    }
+
+    /**
+     * Get matricula.
+     *
+     * @return string
+     */
+    public function getMatricula()
+    {
+        return $this->matricula;
+    }
+
+    /**
+     * Set fone.
+     *
+     * @param string $fone
+     *
+     * @return Usuario
+     */
+    public function setFone($fone)
+    {
+        $this->fone = $fone;
+
+        return $this;
+    }
+
+    /**
+     * Get fone.
+     *
+     * @return string
+     */
+    public function getFone()
+    {
+        return $this->fone;
+    }
+
+    /**
+     * Set curso.
+     *
+     * @param string $curso
+     *
+     * @return Usuario
+     */
+    public function setCurso($curso)
+    {
+        $this->curso = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Get curso.
+     *
+     * @return string
+     */
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+    public function asJSON() {
+    	$str = '{';
+		$grupo = $this->grupo->asJSON();
+		$str .= "\"id\": \"$this->id\",";
+		$str .= "\"login\": \"$this->login\",";
+		$str .= "\"uidnumber\": \"$this->uidnumber\",";
+		$str .= "\"email\": \"$this->email\",";
+		$str .= "\"grupo\": $grupo,";
+		$str .= "\"nome\": \"$this->nome\",";
+		$str .= "\"matricula\": \"$this->matricula\",";
+		$str .= "\"fone\": \"$this->fone\",";
+		$str .= "\"curso\": \"$this->curso\"";
+		$str .= '}';
+		return $str;
+	}
+
 }
