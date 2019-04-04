@@ -15,11 +15,9 @@ class CompraService {
 		return $compra;
 	}
 
-
-
 	public static function getAll() {
 		require __DIR__ . "/../bootstrap.php";
-		$compras = $entity_manager->getRepository('\entities\Compra')
+		$compras = \Utils::getEntityManager()->getRepository('\entities\Compra')
 			->findAll();
 		return $compras;
 	}
@@ -120,6 +118,28 @@ class CompraService {
 		} catch (\Throwable $t) {
 			throw $t;
 		}
+	}
+
+	public static function changeProperty($compraId, $prop, $value) {
+		$compra = self::getById($compraId);
+		$setter = 'set' . strtoupper(substr($prop,0,1)) . substr($prop,1);
+		\Utils::getEntityManager()->persist($compra);
+		switch ($prop) {
+			case 'arquivo':
+				$value = \services\ArquivoService::getById($value);
+				break;
+			case 'estado':
+				$value = \services\CompraService::getEstadoCompraById($value);
+				break;
+			case 'tipoDespesa':
+				$value = \services\CompraService::getTipoDespesaById($value);
+				break;
+			case 'tipoSolicitacao':
+				$value = \services\CompraService::getTipoSolicitacaoById($value);
+				break;
+		}
+		$compra->$setter($value);
+		\Utils::getEntityManager()->flush();
 	}
 
 }

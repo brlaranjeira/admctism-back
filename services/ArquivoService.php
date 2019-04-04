@@ -43,4 +43,12 @@ class ArquivoService
 		return $arq;
 	}
 
+	public static function getById($id) {
+		if (!isset($id)) {
+			return null;
+		}
+		$arquivo = \Utils::getEntityManager()->find('\entities\Arquivo',$id);
+		return $arquivo;
+	}
+
 }
